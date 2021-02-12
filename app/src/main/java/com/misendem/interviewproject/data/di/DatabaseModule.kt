@@ -2,7 +2,7 @@ package com.misendem.interviewproject.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.karbon.wizl3.logick.dao.PostsDao
+import com.misendem.interviewproject.data.dao.PostsDao
 import com.misendem.interviewproject.data.database.AppDatabase
 import toothpick.config.Module
 

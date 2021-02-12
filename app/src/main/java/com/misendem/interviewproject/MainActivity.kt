@@ -1,10 +1,9 @@
 package com.misendem.interviewproject
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MAIN_ACTIVITY"
@@ -18,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.navController.addOnDestinationChangedListener { controller, destination, arguments ->
             Log.d(
                 TAG,
-                "OnDestinationChangedListener: ${controller} ::::: ${destination} :::::: ${arguments} "
+                "OnDestinationChangedListener: $controller ::::: $destination :::::: $arguments "
             )
         }
     }

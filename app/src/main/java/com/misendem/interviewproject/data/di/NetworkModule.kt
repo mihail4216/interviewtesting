@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import toothpick.config.Module
 import java.util.concurrent.TimeUnit
 
-class NetworkModule: Module() {
+class NetworkModule : Module() {
     init {
         val httpLogging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.HEADERS

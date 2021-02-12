@@ -1,11 +1,11 @@
 package com.misendem.interviewproject.data.network
 
-import com.misendem.interviewproject.data.model.PostModels
+import com.misendem.interviewproject.data.model.UserModel
 import io.reactivex.Single
 import retrofit2.http.GET
 
 interface JsonPlaceholderApi {
 
-    @GET("/posts")
-    fun getPosts(): Single<List<PostModels>>
+    @GET("/users")
+    fun getPosts(): Single<List<UserModel>>
 }

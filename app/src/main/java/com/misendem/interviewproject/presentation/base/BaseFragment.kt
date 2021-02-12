@@ -12,9 +12,8 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
-    companion object {
+    companion object;
 
-    }
     /**
      * Возвращает айди лейаута фрагмента
      */
@@ -24,7 +23,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     /**
      * Вызывается при прикреплении фрагмента к активити
      */
-    protected fun onAttachFragment(){}
+    protected fun onAttachFragment() {}
 
     /**
      * Вызывается после создания вью

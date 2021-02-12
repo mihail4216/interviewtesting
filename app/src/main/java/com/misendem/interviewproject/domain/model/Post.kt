@@ -1,8 +1,6 @@
 package com.misendem.interviewproject.domain.model
 
 
-import com.google.gson.annotations.SerializedName
-
 interface Post {
     var id: Int?
     var email: String?

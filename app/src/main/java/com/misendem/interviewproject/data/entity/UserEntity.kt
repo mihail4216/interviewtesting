@@ -2,11 +2,10 @@ package com.misendem.interviewproject.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.misendem.interviewproject.data.model.PostModels
-import com.misendem.interviewproject.domain.model.Post
+import com.misendem.interviewproject.data.model.UserModel
 
 @Entity
-class PostEntity(
+data class UserEntity(
     @PrimaryKey
     var id: Int?,
     var email: String?,
@@ -24,7 +23,7 @@ class PostEntity(
     var suite: String?,
     var zipcode: String?
 ) {
-    constructor(post: PostModels) : this(
+    constructor(post: UserModel) : this(
         id = post.id,
         email = post.email,
         name = post.name,

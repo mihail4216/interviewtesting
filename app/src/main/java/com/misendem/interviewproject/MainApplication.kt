@@ -1,13 +1,10 @@
 package com.misendem.interviewproject
 
-import android.app.Application
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.misendem.interviewproject.data.di.ApplicationModule
 import com.misendem.interviewproject.data.di.DatabaseModule
 import com.misendem.interviewproject.data.di.NetworkModule
-import com.misendem.interviewproject.presentation.features.listPosts.di.DiListPostsModule
-import toothpick.Toothpick
 import toothpick.configuration.Configuration
 import toothpick.ktp.KTP
 

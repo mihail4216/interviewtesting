@@ -1,26 +1,26 @@
-package com.karbon.wizl3.logick.dao
+package com.misendem.interviewproject.data.dao
 
 import androidx.room.*
-import com.misendem.interviewproject.data.entity.PostEntity
+import com.misendem.interviewproject.data.entity.UserEntity
 import io.reactivex.Single
 
 
 @Dao
 interface PostsDao {
 
-    @Query("select * from PostEntity")
-    fun getAllPosts(): Single<List<PostEntity>>
+    @Query("select * from UserEntity")
+    fun getAllPosts(): Single<List<UserEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(cardModelEntity: PostEntity)
+    fun insert(cardModelEntity: UserEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(list: List<PostEntity>)
+    fun insertAll(list: List<UserEntity>)
 
     @Update
-    fun update(cardModelEntity: PostEntity)
+    fun update(cardModelEntity: UserEntity)
 
     @Delete
-    fun delete(cardModelEntity: PostEntity)
+    fun delete(cardModelEntity: UserEntity)
 
 }

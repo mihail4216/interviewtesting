@@ -1,8 +1,10 @@
 package com.misendem.interviewproject.presentation.features.listPosts
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.misendem.interviewproject.MainApplication
+import com.misendem.interviewproject.data.entity.UserEntity
 import com.misendem.interviewproject.domain.interactors.ListPostsInteractor
 import com.misendem.interviewproject.presentation.extension.TAG
 import com.misendem.interviewproject.presentation.features.listPosts.di.DiListPostsModule
@@ -12,12 +14,16 @@ import io.reactivex.schedulers.Schedulers
 import toothpick.ktp.KTP
 import javax.inject.Inject
 
-class ListPostsViewModel : ViewModel() {
+class ListUsersViewModel : ViewModel() {
 
     @Inject
     lateinit var interactor: ListPostsInteractor
 
     private val disposables = CompositeDisposable()
+    val onClickItem: (UserEntity) -> Unit = {
+        Log.d(TAG, "onClick: $it")
+    }
+    val listUsers = MutableLiveData<List<UserEntity>>()
 
     init {
         KTP.openScopes(MainApplication.APP_NAME, this)
@@ -29,6 +35,7 @@ class ListPostsViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    listUsers.value = it
                     Log.d(TAG, "${it.size}")
                 }, { it.printStackTrace() })
         )

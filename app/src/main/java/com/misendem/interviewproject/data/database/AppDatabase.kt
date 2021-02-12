@@ -2,10 +2,10 @@ package com.misendem.interviewproject.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.karbon.wizl3.logick.dao.PostsDao
-import com.misendem.interviewproject.data.entity.PostEntity
+import com.misendem.interviewproject.data.dao.PostsDao
+import com.misendem.interviewproject.data.entity.UserEntity
 
-@Database(entities = [PostEntity::class], version = 1, exportSchema = true)
+@Database(entities = [UserEntity::class], version = 1, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getPostDao(): PostsDao
 }

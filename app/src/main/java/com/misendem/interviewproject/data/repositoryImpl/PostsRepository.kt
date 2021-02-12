@@ -1,7 +1,7 @@
 package com.misendem.interviewproject.data.repositoryImpl
 
-import com.karbon.wizl3.logick.dao.PostsDao
-import com.misendem.interviewproject.data.entity.PostEntity
+import com.misendem.interviewproject.data.dao.PostsDao
+import com.misendem.interviewproject.data.entity.UserEntity
 import com.misendem.interviewproject.data.network.JsonPlaceholderApi
 import com.misendem.interviewproject.data.repository.IPostsRepository
 import io.reactivex.Observable
@@ -15,11 +15,11 @@ class PostsRepository : IPostsRepository {
     @Inject
     lateinit var database: PostsDao
 
-    override fun loadPosts(): Observable<List<PostEntity>> {
+    override fun loadPosts(): Observable<List<UserEntity>> {
         return Observable.merge(
             database.getAllPosts().toObservable(),
             network.getPosts()
-                .map { posts -> posts.map { PostEntity(it) } }
+                .map { posts -> posts.map { UserEntity(it) } }
                 .doOnSuccess {
                     database.insertAll(it)
                 }

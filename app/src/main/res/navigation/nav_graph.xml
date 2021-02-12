@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listRepositoryGitHubFragment"
-        android:name="com.misendem.interviewproject.presentation.features.listPosts.ListPostsFragment"
+        android:name="com.misendem.interviewproject.presentation.features.listPosts.ListUsersFragment"
         android:label="ListRepositoryGitHubFragment"
-        tools:layout="@layout/fragment_list_repository_git_hub" />
+        tools:layout="@layout/fragment_list_users" />
 </navigation>
