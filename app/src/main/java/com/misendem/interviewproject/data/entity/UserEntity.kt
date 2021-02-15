@@ -23,21 +23,21 @@ data class UserEntity(
     var suite: String?,
     var zipcode: String?
 ) {
-    constructor(post: UserModel) : this(
-        id = post.id,
-        email = post.email,
-        name = post.name,
-        phone = post.phone,
-        username = post.username,
-        website = post.website,
-        lat = post.address?.geo?.lat,
-        lng = post.address?.geo?.lng,
-        bs = post.company?.bs,
-        catchPhrase = post.company?.catchPhrase,
-        nameCompany = post.company?.name,
-        city = post.address?.city,
-        street = post.address?.street,
-        suite = post.address?.suite,
-        zipcode = post.address?.zipcode
+    constructor(post: UserModel?) : this(
+        id = post?.id,
+        email = post?.email,
+        name = post?.name,
+        phone = post?.phone,
+        username = post?.username,
+        website = post?.website,
+        lat = post?.address?.geo?.lat,
+        lng = post?.address?.geo?.lng,
+        bs = post?.company?.bs,
+        catchPhrase = post?.company?.catchPhrase,
+        nameCompany = post?.company?.name,
+        city = post?.address?.city,
+        street = post?.address?.street,
+        suite = post?.address?.suite,
+        zipcode = post?.address?.zipcode
     )
 }

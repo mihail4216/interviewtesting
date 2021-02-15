@@ -10,7 +10,7 @@ import kotlin.properties.Delegates
 
 class UsersAdapter : RecyclerView.Adapter<UsersAdapter.PostViewHolder>() {
     var onClickItemPostListener: (UserEntity) -> Unit = {}
-    private var listUsers: List<UserEntity> by Delegates.observable(emptyList()) { prop, oldList, newList ->
+    private var listUsers: List<UserEntity> by Delegates.observable(emptyList()) { _, oldList, newList ->
         autoNotify(oldList, newList) { o, n ->
             o == n
         }

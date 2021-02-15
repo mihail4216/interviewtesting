@@ -11,6 +11,9 @@ interface PostsDao {
     @Query("select * from UserEntity")
     fun getAllPosts(): Single<List<UserEntity>>
 
+    @Query("select * from UserEntity where id=:id")
+    suspend fun getUserById(id: Int): UserEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(cardModelEntity: UserEntity)
 

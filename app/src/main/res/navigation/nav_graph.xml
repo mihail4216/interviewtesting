@@ -3,11 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listRepositoryGitHubFragment">
+    app:startDestination="@id/listUsersFragment">
 
     <fragment
-        android:id="@+id/listRepositoryGitHubFragment"
+        android:id="@+id/listUsersFragment"
         android:name="com.misendem.interviewproject.presentation.features.listPosts.ListUsersFragment"
-        android:label="ListRepositoryGitHubFragment"
-        tools:layout="@layout/fragment_list_users" />
+        android:label="ListUsersFragment"
+        tools:layout="@layout/fragment_list_users">
+        <action
+            android:id="@+id/action_listUsersFragment_to_userInfoFragment"
+            app:destination="@id/userInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userInfoFragment"
+        android:name="com.misendem.interviewproject.presentation.features.profileUser.ProfileUserFragment"
+        android:label="UserInfoFragment"
+        tools:layout="@layout/fragment_profile_user">
+        <argument
+            android:name="id"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
 </navigation>

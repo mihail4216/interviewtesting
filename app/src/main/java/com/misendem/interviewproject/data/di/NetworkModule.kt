@@ -2,6 +2,7 @@ package com.misendem.interviewproject.data.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.misendem.interviewproject.BuildConfig
 import com.misendem.interviewproject.data.network.JsonPlaceholderApi
@@ -30,9 +31,11 @@ class NetworkModule : Module() {
         val appApi = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(okHttpClient)
             .baseUrl(BuildConfig.BASE_URL)
-            .build().create(JsonPlaceholderApi::class.java)
+            .build()
+            .create(JsonPlaceholderApi::class.java)
 
 
         bind(Gson::class.java).toInstance(gson)
