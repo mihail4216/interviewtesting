@@ -1,11 +1,13 @@
 package com.misendem.interviewproject.data.repositoryImpl
 
-import com.misendem.interviewproject.data.Result
 import com.misendem.interviewproject.data.dao.PostsDao
 import com.misendem.interviewproject.data.entity.UserEntity
 import com.misendem.interviewproject.data.network.JsonPlaceholderApi
 import com.misendem.interviewproject.data.repository.IUsersRepository
 import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UsersRepository : IUsersRepository {
@@ -31,9 +33,11 @@ class UsersRepository : IUsersRepository {
 
     }
 
-    override suspend fun loadInfoUserById(id: Int): Result<UserEntity> {
-        val userNetworkData = network.getUserById(id).await()
-        return if (userNetworkData != null) Result.Success(UserEntity(userNetworkData))
-        else Result.Error(Exception("Error network"))
+    override suspend fun loadInfoUserById(id: Int): Flow<UserEntity> {
+        return flow {
+            emit(database.getUserById(id))
+            emit(UserEntity(network.getUserById(id)))
+        }
     }
+
 }

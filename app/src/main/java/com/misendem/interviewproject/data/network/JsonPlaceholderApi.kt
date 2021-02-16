@@ -12,5 +12,5 @@ interface JsonPlaceholderApi {
     fun getUsers(): Single<List<UserModel>>
 
     @GET("/users/{id}")
-    fun getUserById(@Path("id") id:Int):Deferred<UserModel>
+    suspend fun getUserById(@Path("id") id:Int):UserModel
 }

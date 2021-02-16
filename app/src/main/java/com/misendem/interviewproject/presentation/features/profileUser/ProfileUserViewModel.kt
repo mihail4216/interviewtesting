@@ -2,33 +2,18 @@ package com.misendem.interviewproject.presentation.features.profileUser
 
 import androidx.lifecycle.*
 import com.misendem.interviewproject.MainApplication
-import com.misendem.interviewproject.data.Result
 import com.misendem.interviewproject.data.entity.UserEntity
 import com.misendem.interviewproject.domain.interactors.UserInfoInteractor
 import com.misendem.interviewproject.presentation.features.profileUser.di.DiUserInfoModule
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import toothpick.ktp.KTP
 import javax.inject.Inject
 
 class ProfileUserViewModel : ViewModel() {
-    fun setArgs(args: ProfileUserFragmentArgs) {
-        viewModelScope.launch(Dispatchers.IO) {
-            when (val result = userInteractor.getUserData(args.id)) {
-                is Result.Success -> {
-                    withContext(Dispatchers.Main) {
-                        mUserInfo.value = result.data
-                    }
-                }
-                is Result.Error -> {
-                    withContext(Dispatchers.Main) {
-                        mError.value = result.exception.toString()
-                    }
-                }
-            }
-        }
-    }
 
     @Inject
     lateinit var userInteractor: UserInfoInteractor
@@ -37,12 +22,31 @@ class ProfileUserViewModel : ViewModel() {
     private val mError: MutableLiveData<String> = MutableLiveData()
 
     val userInfo: LiveData<UserEntity> = mUserInfo
-    val errorIsVisible: LiveData<Boolean> = mError.map { it.isNullOrBlank() }
+    val errorIsVisible: LiveData<Boolean> = mError.map { !it.isNullOrBlank() }
+    val errorText: LiveData<String> = mError
+
 
     init {
         KTP.openScopes(MainApplication.APP_NAME, this)
             .installModules(DiUserInfoModule())
             .inject(this)
+    }
+
+    fun setArgs(args: ProfileUserFragmentArgs) {
+        viewModelScope.launch(Dispatchers.IO) {
+            userInteractor.getUserData(args.id)
+                .catch { error ->
+                    error.printStackTrace()
+                    withContext(Dispatchers.Main) {
+                        mError.value = error.message
+                    }
+                }
+                .collect {
+                    withContext(Dispatchers.Main) {
+                        mUserInfo.value = it
+                    }
+                }
+        }
     }
 
 }
