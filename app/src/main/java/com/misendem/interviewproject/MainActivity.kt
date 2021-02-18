@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.ActivityScoped
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val TAG = "MAIN_ACTIVITY"
     private lateinit var navHostFragment: NavHostFragment

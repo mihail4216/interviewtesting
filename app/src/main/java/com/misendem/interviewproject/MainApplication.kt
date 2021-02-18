@@ -2,25 +2,15 @@ package com.misendem.interviewproject
 
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.misendem.interviewproject.data.di.ApplicationModule
-import com.misendem.interviewproject.data.di.DatabaseModule
-import com.misendem.interviewproject.data.di.NetworkModule
-import toothpick.configuration.Configuration
-import toothpick.ktp.KTP
+import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.internal.modules.ApplicationContextModule
+import dagger.hilt.android.internal.modules.HiltWrapper_ActivityModule
 
+
+@HiltAndroidApp
 class MainApplication : MultiDexApplication() {
-    companion object {
-        val APP_NAME = MainApplication::class.java.name
-    }
-
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(this)
-        KTP.setConfiguration(if (BuildConfig.DEBUG) Configuration.forDevelopment() else Configuration.forProduction())
-        KTP.openScope(APP_NAME).installModules(
-            ApplicationModule(this),
-            NetworkModule(),
-            DatabaseModule(this)
-        )
     }
 }

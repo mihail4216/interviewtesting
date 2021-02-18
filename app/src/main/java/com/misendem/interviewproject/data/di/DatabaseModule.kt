@@ -4,23 +4,31 @@ import android.content.Context
 import androidx.room.Room
 import com.misendem.interviewproject.data.dao.PostsDao
 import com.misendem.interviewproject.data.database.AppDatabase
-import toothpick.config.Module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DatabaseModule(context: Context) : Module() {
+@Module
+@InstallIn(SingletonComponent::class)
+class DatabaseModule  {
 
-    init {
-        val database = Room.databaseBuilder(
+    @Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
             context,
             AppDatabase::class.java,
             "AppDatabase"
         ).build()
-        bind(AppDatabase::class.java).toInstance(
-            database
-        )
-        bind(PostsDao::class.java).toInstance(
-            database.getPostDao()
-        )
+    }
 
-
+    @Provides
+    fun providePostDao(appDatabase: AppDatabase): PostsDao {
+        return appDatabase.getPostDao()
     }
 }

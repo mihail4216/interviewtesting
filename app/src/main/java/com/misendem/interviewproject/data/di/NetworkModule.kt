@@ -5,40 +5,54 @@ import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.misendem.interviewproject.BuildConfig
 import com.misendem.interviewproject.data.network.JsonPlaceholderApi
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import toothpick.config.Module
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
-class NetworkModule : Module() {
-    init {
-        val httpLogging = HttpLoggingInterceptor().apply {
+
+@Module
+@InstallIn(SingletonComponent::class)
+class NetworkModule {
+
+    @Provides
+    fun provideHttpLogger(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.HEADERS
         }
-        val gson = GsonBuilder()
+    }
+
+    @Provides
+    fun provideOkHttp(httpLogging: HttpLoggingInterceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(httpLogging)
+            .build()
+    }
+
+    @Provides
+    fun provideGson(): Gson {
+        return GsonBuilder()
             .setLenient()
             .serializeNulls()
             .create()
-        val okHttpClient =
-            OkHttpClient.Builder()
-                .readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .addInterceptor(httpLogging)
-                .build()
-        val appApi = Retrofit.Builder()
+    }
+
+    @Singleton
+    @Provides
+    fun provideNetwork(gson: Gson, okHttpClient: OkHttpClient): JsonPlaceholderApi {
+        return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .baseUrl(BuildConfig.BASE_URL)
             .build().create(JsonPlaceholderApi::class.java)
-
-
-        bind(Gson::class.java).toInstance(gson)
-        bind(HttpLoggingInterceptor::class.java).toInstance(httpLogging)
-        bind(OkHttpClient::class.java).toInstance(okHttpClient)
-        bind(JsonPlaceholderApi::class.java).toInstance(appApi)
-
     }
 }
