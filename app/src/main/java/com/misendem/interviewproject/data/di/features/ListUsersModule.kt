@@ -18,6 +18,7 @@ abstract class ListUsersModule {
     @Binds
     abstract fun bindsRepository(usersRepository: UsersRepository): IUsersRepository
 
+
     @Module
     @InstallIn(ViewModelComponent::class)
     object Modules {
@@ -26,5 +27,7 @@ abstract class ListUsersModule {
         fun provideInteractor(rep: IUsersRepository): ListUserInteractor {
             return ListUserInteractor(rep)
         }
+
+
     }
 }
